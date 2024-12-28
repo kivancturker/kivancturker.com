@@ -25,7 +25,7 @@ export default async function Home() {
                   href="mailto:kivanc.software@gmail.com"
                   className="inline-flex items-center rounded-lg bg-sky-500 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-sky-600"
                 >
-                  Let&apos;s Build Together
+                  Contact Me
                 </a>
                 <a
                   href="https://github.com/kivancturker"
