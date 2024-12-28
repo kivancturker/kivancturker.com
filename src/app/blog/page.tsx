@@ -1,66 +1,11 @@
-'use client';
-
 import React from 'react';
 import PageTransition from '@/components/shared/PageTransition';
-import BlogCard, { BlogPost } from '@/components/blog/BlogCard';
+import BlogCard from '@/components/blog/BlogCard';
+import { getBlogPosts } from '@/utils/content';
 
-const blogPosts: BlogPost[] = [
-  {
-    title: 'Understanding Clean Architecture in Modern Web Development',
-    excerpt:
-      'A deep dive into implementing clean architecture principles in web applications...',
-    date: '2023-12-20',
-    readTime: '5 min read',
-    tags: ['Architecture', 'Web Development', 'Best Practices'],
-  },
-  {
-    title: 'The Power of TypeScript in Large Scale Applications',
-    excerpt:
-      'How TypeScript improves developer experience and code quality in large projects...',
-    date: '2023-12-15',
-    readTime: '4 min read',
-    tags: ['TypeScript', 'JavaScript', 'Development'],
-  },
-  {
-    title: 'Microservices vs Monolith: Making the Right Choice',
-    excerpt:
-      'Analyzing when to choose microservices over monolithic architecture...',
-    date: '2023-12-10',
-    readTime: '6 min read',
-    tags: ['Microservices', 'Architecture', 'System Design'],
-  },
-  {
-    title: 'Getting Started with Next.js 13',
-    excerpt:
-      'A comprehensive guide to building modern web applications with Next.js 13...',
-    date: '2023-12-05',
-    readTime: '7 min read',
-    tags: ['Next.js', 'React', 'Web Development'],
-  },
-  {
-    title: 'The Future of Web Development: What to Expect in 2024',
-    excerpt:
-      'Exploring upcoming trends and technologies that will shape web development...',
-    date: '2023-12-01',
-    readTime: '8 min read',
-    tags: ['Web Development', 'Trends', 'Technology'],
-  },
-  {
-    title: 'Building Scalable APIs with .NET Core',
-    excerpt:
-      'Best practices and patterns for creating robust and scalable APIs using .NET Core...',
-    date: '2023-11-28',
-    readTime: '6 min read',
-    tags: ['.NET Core', 'API', 'Backend'],
-  },
-];
+export default async function Blog() {
+  const posts = await getBlogPosts();
 
-// Sort posts by date (most recent first)
-const sortedPosts = [...blogPosts].sort(
-  (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-);
-
-export default function Blog() {
   return (
     <PageTransition>
       <div className="bg-white py-16 sm:py-24">
@@ -75,11 +20,45 @@ export default function Blog() {
             </p>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2">
-            {sortedPosts.map((post) => (
-              <BlogCard key={post.title} post={post} />
-            ))}
-          </div>
+          {posts.length > 0 ? (
+            <div className="grid gap-8 sm:grid-cols-2">
+              {posts.map((post) => (
+                <BlogCard
+                  key={post.slug}
+                  post={{
+                    title: post.frontmatter.title,
+                    excerpt: post.frontmatter.excerpt,
+                    date: post.frontmatter.date,
+                    readTime: post.frontmatter.readTime,
+                    tags: post.frontmatter.tags,
+                  }}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white p-12 text-center">
+              <svg
+                className="mx-auto h-12 w-12 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2"
+                />
+              </svg>
+              <h3 className="mt-2 text-sm font-semibold text-gray-900">
+                No blog posts yet
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Check back later for new content!
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </PageTransition>

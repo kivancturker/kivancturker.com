@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { generateSlug } from '@/utils/content';
 
 export interface BlogPost {
   title: string;
@@ -15,17 +16,24 @@ interface BlogCardProps {
   post: BlogPost;
 }
 
-// Helper function to generate consistent slugs
-export function generateSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
-}
-
 export default function BlogCard({ post }: BlogCardProps) {
   const router = useRouter();
   const slug = generateSlug(post.title);
+  const [formattedDate, setFormattedDate] = useState<string>(post.date);
+
+  useEffect(() => {
+    try {
+      setFormattedDate(
+        new Date(post.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      );
+    } catch (error) {
+      console.error('Error formatting date:', error);
+    }
+  }, [post.date]);
 
   return (
     <div
@@ -33,13 +41,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       className="cursor-pointer overflow-hidden rounded-lg bg-white p-6 shadow-lg transition-transform hover:scale-105"
     >
       <div className="flex items-center justify-between text-sm text-gray-500">
-        <span>
-          {new Date(post.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
-        </span>
+        <span>{formattedDate}</span>
         <span>{post.readTime}</span>
       </div>
       <h2 className="mt-2 text-xl font-semibold text-gray-900">{post.title}</h2>

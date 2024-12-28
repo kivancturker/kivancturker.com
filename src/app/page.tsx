@@ -3,7 +3,7 @@ import PageTransition from '@/components/shared/PageTransition';
 import ProjectsSection from '@/components/projects/ProjectsSection';
 import BlogSection from '@/components/blog/BlogSection';
 
-export default function Home() {
+export default async function Home() {
   return (
     <PageTransition>
       <main>
@@ -32,7 +32,7 @@ export default function Home() {
                 </a>
                 <div className="flex space-x-4">
                   <a
-                    href="https://github.com/yourusername"
+                    href="https://github.com/kivancturker"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-600 transition-colors hover:text-sky-500"

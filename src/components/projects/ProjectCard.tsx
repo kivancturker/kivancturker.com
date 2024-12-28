@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { generateSlug } from '@/utils/content';
 
 export interface Project {
   title: string;
@@ -15,17 +16,9 @@ interface ProjectCardProps {
   project: Project;
 }
 
-// Helper function to generate consistent slugs
-export function generateProjectSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '');
-}
-
 export default function ProjectCard({ project }: ProjectCardProps) {
   const router = useRouter();
-  const slug = generateProjectSlug(project.title);
+  const slug = generateSlug(project.title);
 
   return (
     <div

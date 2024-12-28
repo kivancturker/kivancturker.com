@@ -10,17 +10,20 @@ interface BlogPostContentProps {
 }
 
 export default function BlogPostContent({ post }: BlogPostContentProps) {
-  const [formattedDate, setFormattedDate] = useState<string>('');
+  const [formattedDate, setFormattedDate] = useState<string>(post.date);
 
   useEffect(() => {
-    // Format date on client-side only to avoid hydration mismatch
-    setFormattedDate(
-      new Date(post.date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    );
+    try {
+      setFormattedDate(
+        new Date(post.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      );
+    } catch (error) {
+      console.error('Error formatting date:', error);
+    }
   }, [post.date]);
 
   return (
