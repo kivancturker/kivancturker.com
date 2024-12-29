@@ -1,0 +1,44 @@
+[
+  {
+    "role": "Software Engineer",
+    "company": "Intertech",
+    "duration": "Dec 2022 - Feb 2024",
+    "description": "Developed and maintained banking applications at the treasury department.",
+    "tags": [
+      ".Net",
+      "SQL Server",
+      "React",
+      "RabbitMq",
+      "Microservice",
+      "Agile"
+    ]
+  },
+  {
+    "role": "Backend Engineer",
+    "company": "Innovance Consultancy",
+    "duration": "Feb 2024 - June 2024",
+    "description": "Backend development for Mobilet (Online ticket-selling application).",
+    "tags": [
+      ".Net",
+      "SQL Server",
+      "Redis",
+      "Hasura GraphQL",
+      "Azure"
+    ]
+  },
+  {
+    "role": "Full Stack Freelancer",
+    "company": "Self Employed",
+    "duration": "July 2024 - Present",
+    "description": "Building side projects and clients projects",
+    "tags": [
+      ".Net",
+      "PostgreSQL",
+      "React",
+      "React Native",
+      "Node.js",
+      "Express.js",
+      "Typescript"
+    ]
+  }
+]

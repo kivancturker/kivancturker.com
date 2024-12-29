@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'standalone', // Required for Netlify
   devIndicators: {
     buildActivity: true,
     buildActivityPosition: 'bottom-right',
@@ -16,7 +17,14 @@ const nextConfig = {
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false, // Ensure `fs` is ignored on the client
+      };
+    }
+
     config.module.rules.push({
       test: /\.md$/,
       type: 'asset/source',

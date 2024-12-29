@@ -1,48 +1,16 @@
 import React from 'react';
 import PageTransition from '@/components/shared/PageTransition';
+import {
+  getEducationData,
+  getExperienceData,
+  getHomepageContent,
+} from '@/utils/content';
 
-interface Education {
-  school: string;
-  degree: string;
-  duration: string;
-  description: string;
-}
+export default async function About() {
+  const homepageContent = await getHomepageContent();
+  const educationData = await getEducationData();
+  const experienceData = await getExperienceData();
 
-interface Experience {
-  role: string;
-  company: string;
-  duration: string;
-  description: string;
-}
-
-const educationData: Education[] = [
-  {
-    school: 'Istanbul Technical University',
-    degree: 'Bachelor of Science in Computer Engineering',
-    duration: '2019 - 2023',
-    description:
-      'Focused on software development, algorithms, and computer science fundamentals.',
-  },
-];
-
-const experienceData: Experience[] = [
-  {
-    role: 'Software Developer',
-    company: 'Turkcell',
-    duration: '2023 - Present',
-    description:
-      'Working on enterprise-level applications using .NET, React, and cloud technologies.',
-  },
-  {
-    role: 'Software Developer Intern',
-    company: 'Tech Company',
-    duration: 'Summer 2022',
-    description:
-      'Developed and maintained web applications using modern JavaScript frameworks.',
-  },
-];
-
-export default function About() {
   return (
     <PageTransition>
       <div className="bg-white py-16 sm:py-24">
@@ -50,12 +18,10 @@ export default function About() {
           {/* Introduction Section */}
           <div className="mb-16 text-center">
             <h1 className="mb-4 text-4xl font-bold text-gray-900 sm:text-5xl">
-              Hi, I am Kıvanç Türker
+              {homepageContent.hero.title}
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-gray-600">
-              I am a passionate full-stack developer with expertise in React,
-              Next.js, and .NET. I love building scalable applications and
-              solving complex problems with elegant solutions.
+              {homepageContent.hero.description}
             </p>
           </div>
 
