@@ -5,7 +5,6 @@ import BlogSection from '@/components/blog/BlogSection';
 import { getHomepageContent } from '@/utils/content';
 
 export default async function Home() {
-  console.log(typeof window);
   const homepageContent = await getHomepageContent();
 
   return (

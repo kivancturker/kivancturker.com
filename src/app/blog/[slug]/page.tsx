@@ -3,12 +3,6 @@ import BlogPostContent from '@/components/blog/BlogPostContent';
 import { getBlogPost, getBlogPosts } from '@/utils/content';
 import { notFound } from 'next/navigation';
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
-
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
   return posts.map((post) => ({
@@ -16,8 +10,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlogPost({ params }: PageProps) {
-  const post = await getBlogPost(params.slug);
+export default async function BlogPost({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const post = await getBlogPost(slug);
 
   if (!post) {
     notFound();

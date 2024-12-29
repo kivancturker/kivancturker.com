@@ -3,12 +3,6 @@ import ProjectContent from '@/components/projects/ProjectContent';
 import { getProject, getProjects } from '@/utils/content';
 import { notFound } from 'next/navigation';
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
-
 export async function generateStaticParams() {
   const projects = await getProjects();
   return projects.map((project) => ({
@@ -16,8 +10,13 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function ProjectPage({ params }: PageProps) {
-  const project = await getProject(params.slug);
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const project = await getProject(slug);
 
   if (!project) {
     notFound();
